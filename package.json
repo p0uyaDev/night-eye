@@ -1,17 +1,9 @@
 {
   "name": "night-eye",
   "version": "1.0.0",
-  "description": "Night Eye - A MERN Stack Sci-Fi News Platform",
-  "private": true,
+  "author": "Pouya Khoshfekr",
   "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "dev": "pnpm -r dev",
-    "build": "pnpm -r build",
-    "start": "pnpm -r start",
-    "lint": "pnpm -r lint",
-    "format": "pnpm -r format"
-  },
+  "description": "Night Eye - A MERN Stack Sci-Fi News Platform",
   "keywords": [
     "mern",
     "vite",
@@ -22,7 +14,24 @@
     "pnpm",
     "monorepo"
   ],
-  "author": "Pouya Khoshfekr",
   "license": "MIT",
-  "packageManager": "pnpm@10.11.0"
+  "packageManager": "pnpm@10.11.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r dev",
+    "build": "pnpm -r build",
+    "start": "pnpm -r start",
+    "lint": "pnpm -r lint",
+    "format": "pnpm -r format"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^9.37.0",
+    "eslint": "^9.37.0",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.4.0"
+  },
+  "dependencies": {
+    "lucide-react": "^0.544.0"
+  }
 }
