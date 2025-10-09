@@ -57,3 +57,82 @@ html {
   scroll-behavior: smooth;
   font-family: "Space Mono", monospace;
 }
+
+/* TipTap Editor styling, tuned for TokyoNight + DaisyUI dark theme */
+.tiptap {
+  @apply prose max-w-none text-[--color-text];
+}
+
+/* Headings */
+.tiptap h1 {
+  @apply text-2xl font-bold text-[--color-primary] mt-6 mb-3;
+}
+.tiptap h2 {
+  @apply text-xl font-semibold text-[--color-accent] mt-5 mb-2;
+}
+.tiptap h3 {
+  @apply text-lg font-semibold text-[--color-accent-2] mt-4 mb-1;
+}
+
+/* Paragraphs */
+.tiptap p {
+  @apply my-2 leading-relaxed text-[--color-text];
+}
+
+/* Highlight / Mark */
+.tiptap mark {
+  background-color: color-mix(in srgb, var(--color-warning) 60%, transparent);
+  color: var(--color-base-content);
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.3rem;
+}
+
+/* Bold / Italic / Strike */
+.tiptap strong {
+  @apply font-bold text-[--color-primary];
+}
+.tiptap em {
+  @apply italic text-[--color-secondary];
+}
+.tiptap s {
+  @apply text-[--color-muted];
+}
+
+/* Code */
+.tiptap code {
+  @apply bg-[--color-surface] text-[--color-accent] rounded px-1 py-0.5 font-mono text-sm;
+}
+.tiptap pre {
+  @apply bg-[--color-base-200] rounded-lg p-4 text-[--color-accent] font-mono text-sm overflow-x-auto;
+}
+
+/* Lists */
+.tiptap ul {
+  @apply list-disc pl-6 my-2;
+}
+.tiptap ol {
+  @apply list-decimal pl-6 my-2;
+}
+
+/* Blockquote */
+.tiptap blockquote {
+  border-left: 3px solid var(--color-accent);
+  @apply pl-4 italic text-[--color-muted] my-4;
+}
+
+/* Horizontal rule */
+.tiptap hr {
+  border-color: var(--color-neutral);
+  @apply my-6 border-t;
+}
+
+/* Text alignment */
+.tiptap [style*="text-align:center"] {
+  @apply text-center;
+}
+.tiptap [style*="text-align:right"] {
+  @apply text-right;
+}
+.tiptap [style*="text-align:justify"] {
+  @apply text-justify;
+}
