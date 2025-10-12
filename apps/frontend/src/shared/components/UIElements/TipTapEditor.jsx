@@ -1,8 +1,11 @@
+import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
+
+import StarterKit from "@tiptap/starter-kit";
+import { TextStyleKit } from "@tiptap/extension-text-style";
+
+import Image from "@tiptap/extension-image";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
-import { TextStyleKit } from "@tiptap/extension-text-style";
-import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 
 import {
   Italic as ItalicIcon,
@@ -22,7 +25,33 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 
+function openFileDialog(accept = "*/*") {
+  return new Promise((resolve) => {
+    const input = document.createElement("input");
+    ((input.type = "file"), (input.accept = accept));
+    input.onchnage = () => resolve(input.files[0]);
+    input.click();
+  });
+}
+
 function ToolBar({ editor }) {
+  function addImage(method) {
+    switch (method) {
+      case URL:
+        const url = window.prompt("Enter Image URL:");
+        if (url) {
+          try {
+            new URL(url);
+            editor.chain().focus().setImage({ src: url }).run();
+          } catch (e) {
+            alert("Invalid URL, Please enter a valid link!");
+          }
+        }
+      case File:
+        console.log("file uploaded"); //TODO: need backend
+    }
+  }
+
   if (!editor) {
     return null;
   }
@@ -267,16 +296,16 @@ function ToolBar({ editor }) {
 
       <ul class="menu lg:menu-sm pt-0">
         <li>
-          <details open>
+          <details>
             <summary>
               <ImageIcon />
             </summary>
             <ul>
               <li>
-                <a>URL</a>
+                <a onClick={() => addImage(URL)}>URL</a>
               </li>
               <li>
-                <a>File</a>
+                <a onClick={() => addImage(File)}>File</a>
               </li>
             </ul>
           </details>
@@ -305,11 +334,12 @@ function ToolBar({ editor }) {
 function TipTapEditor({ onChange, value }) {
   const editor = useEditor({
     extensions: [
-      Highlight,
       TextStyleKit,
       StarterKit,
+      Image,
+      Highlight,
       TextAlign.configure({
-        type: ["heading", "paragraph"],
+        types: ["heading", "paragraph"],
       }),
     ],
     content: value,
