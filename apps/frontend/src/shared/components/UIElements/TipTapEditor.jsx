@@ -76,7 +76,7 @@ function ToolBar({ editor }) {
       canRedo: ctx.editor.can().chain().redo().run(),
 
       color: ctx.editor.getAttributes("textStyle").color,
-      color: ctx.editor.getAttributes("textStyle").backgroundColor,
+      backgroundColor: ctx.editor.getAttributes("textStyle").backgroundColor,
     }),
   });
 
@@ -222,10 +222,10 @@ function ToolBar({ editor }) {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-text-align-start-icon lucide-text-align-start"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-text-align-start-icon lucide-text-align-start"
         >
           <path d="M21 5H3" />
           <path d="M15 12H3" />
@@ -244,10 +244,10 @@ function ToolBar({ editor }) {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-text-align-center-icon lucide-text-align-center"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-text-align-center-icon lucide-text-align-center"
         >
           <path d="M21 5H3" />
           <path d="M17 12H7" />
@@ -266,10 +266,10 @@ function ToolBar({ editor }) {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-text-align-end-icon lucide-text-align-end"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-text-align-end-icon lucide-text-align-end"
         >
           <path d="M21 5H3" />
           <path d="M21 12H9" />
@@ -288,10 +288,10 @@ function ToolBar({ editor }) {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-text-align-justify-icon lucide-text-align-justify"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-text-align-justify-icon lucide-text-align-justify"
         >
           <path d="M3 5h18" />
           <path d="M3 12h18" />
@@ -299,7 +299,49 @@ function ToolBar({ editor }) {
         </svg>
       </button>
 
-      <ul class="menu lg:menu-sm pt-0">
+      <button className="btn btn-sm btn-ghsot">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-list-chevrons-up-down-icon lucide-list-chevrons-up-down"
+        >
+          <path d="M3 5h8" />
+          <path d="M3 12h8" />
+          <path d="M3 19h8" />
+          <path d="m15 8 3-3 3 3" />
+          <path d="m15 16 3 3 3-3" />
+        </svg>
+      </button>
+
+      <button className="btn btn-sm btn-ghsot">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-list-chevrons-down-up-icon lucide-list-chevrons-down-up"
+        >
+          <path d="M3 5h8" />
+          <path d="M3 12h8" />
+          <path d="M3 19h8" />
+          <path d="m15 5 3 3 3-3" />
+          <path d="m15 19 3-3 3 3" />
+        </svg>
+      </button>
+
+      <ul className="menu lg:menu-sm pt-0">
         <li>
           <details>
             <summary>
@@ -317,26 +359,10 @@ function ToolBar({ editor }) {
         </li>
       </ul>
 
-      <button
-        onClick={() => editor.chain().focus().undo().run()}
-        className="btn btn-sm btn-ghost"
-        disabled={!editorState.canUndo}
-      >
-        <UndoIcon />
-      </button>
-
-      <button
-        onClick={() => editor.chain().focus().redo().run()}
-        className="btn btn-sm btn-ghost"
-        disabled={!editorState.canRedo}
-      >
-        <RedoIcon />
-      </button>
-
-      <ul class="menu lg:menu-sm pt-0">
+      <ul className="menu lg:menu-sm pt-0">
         <li>
           <details>
-            <summary>
+            <summary style={{ color: editorState.color || "inherit" }}>
               <PaletteIcon />
               Text Color
             </summary>
@@ -368,10 +394,12 @@ function ToolBar({ editor }) {
         </li>
       </ul>
 
-      <ul class="menu lg:menu-sm pt-0">
+      <ul className="menu lg:menu-sm pt-0">
         <li>
           <details>
-            <summary>
+            <summary
+              style={{ color: editorState.backgroundColor || "inherit" }}
+            >
               <BaselineIcon />
               Background Color
             </summary>
@@ -404,6 +432,22 @@ function ToolBar({ editor }) {
           </details>
         </li>
       </ul>
+
+      <button
+        onClick={() => editor.chain().focus().undo().run()}
+        className="btn btn-sm btn-ghost"
+        disabled={!editorState.canUndo}
+      >
+        <UndoIcon />
+      </button>
+
+      <button
+        onClick={() => editor.chain().focus().redo().run()}
+        className="btn btn-sm btn-ghost"
+        disabled={!editorState.canRedo}
+      >
+        <RedoIcon />
+      </button>
     </div>
   );
 }
