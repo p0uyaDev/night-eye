@@ -2,6 +2,7 @@ import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
 
 import StarterKit from "@tiptap/starter-kit";
 import { TextStyleKit } from "@tiptap/extension-text-style";
+import { BubbleMenu, FloatingMenu } from "@tiptap/react/menus";
 
 import Image from "@tiptap/extension-image";
 import Highlight from "@tiptap/extension-highlight";
@@ -36,7 +37,7 @@ function openFileDialog(accept = "*/*") {
   });
 }
 
-function ToolBar({ editor }) {
+function ToolBar({ editor, editorState }) {
   function addImage(method) {
     switch (method) {
       case URL:
@@ -57,30 +58,6 @@ function ToolBar({ editor }) {
   if (!editor) {
     return null;
   }
-
-  const editorState = useEditorState({
-    editor,
-    selector: (ctx) => ({
-      isBold: ctx.editor.isActive("bold"),
-      isItalic: ctx.editor.isActive("italic"),
-      isStrike: ctx.editor.isActive("strike"),
-      isParagraph: ctx.editor.isActive("paragraph"),
-      isHeading1: ctx.editor.isActive("heading", { level: 1 }),
-      isHeading2: ctx.editor.isActive("heading", { level: 2 }),
-      isHeading3: ctx.editor.isActive("heading", { level: 3 }),
-      isBulletList: ctx.editor.isActive("bulletList"),
-      isOrderedList: ctx.editor.isActive("orderedList"),
-      isBlockquote: ctx.editor.isActive("blockquote"),
-
-      canUndo: ctx.editor.can().chain().undo().run(),
-      canRedo: ctx.editor.can().chain().redo().run(),
-
-      color: ctx.editor.getAttributes("textStyle").color,
-      backgroundColor: ctx.editor.getAttributes("textStyle").backgroundColor,
-
-      isLarge: ctx.editor.isActive("textStyle", { lineHeight: "2.0" }),
-    }),
-  });
 
   return (
     <div className="flex flex-wrap gap-1 mb-4">
@@ -460,9 +437,50 @@ function TipTapEditor({ onChange, value }) {
     },
   });
 
+  const editorState = useEditorState({
+    editor,
+    selector: (ctx) => ({
+      isBold: ctx.editor.isActive("bold"),
+      isItalic: ctx.editor.isActive("italic"),
+      isStrike: ctx.editor.isActive("strike"),
+      isParagraph: ctx.editor.isActive("paragraph"),
+      isHeading1: ctx.editor.isActive("heading", { level: 1 }),
+      isHeading2: ctx.editor.isActive("heading", { level: 2 }),
+      isHeading3: ctx.editor.isActive("heading", { level: 3 }),
+      isBulletList: ctx.editor.isActive("bulletList"),
+      isOrderedList: ctx.editor.isActive("orderedList"),
+      isBlockquote: ctx.editor.isActive("blockquote"),
+
+      canUndo: ctx.editor.can().chain().undo().run(),
+      canRedo: ctx.editor.can().chain().redo().run(),
+
+      color: ctx.editor.getAttributes("textStyle").color,
+      backgroundColor: ctx.editor.getAttributes("textStyle").backgroundColor,
+
+      isLarge: ctx.editor.isActive("textStyle", { lineHeight: "2.0" }),
+    }),
+  });
+
   return (
     <div className="border p-4 rounded space-4">
-      <ToolBar editor={editor} />
+      {editor && (
+        <BubbleMenu
+          className="bg-base-200 rounded-sm shadow-base-100 border border-solid border-base-300"
+          editor={editor}
+        >
+          <button
+            onClick={() => editor.chain().focus().toggleBold().run()}
+            className={
+              editorState.isBold
+                ? "btn btn-sm btn-primary"
+                : "btn btn-sm btn-ghost"
+            }
+          >
+            Bold
+          </button>
+        </BubbleMenu>
+      )}
+      <ToolBar editor={editor} editorState={editorState} />
       <EditorContent editor={editor} />
     </div>
   );
