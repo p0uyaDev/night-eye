@@ -23,6 +23,8 @@ import {
   Heading2 as Heading2Icon,
   Heading3 as Heading3Icon,
   Image as ImageIcon,
+  Palette as PaletteIcon,
+  Baseline as BaselineIcon,
 } from "lucide-react";
 
 function openFileDialog(accept = "*/*") {
@@ -72,6 +74,9 @@ function ToolBar({ editor }) {
 
       canUndo: ctx.editor.can().chain().undo().run(),
       canRedo: ctx.editor.can().chain().redo().run(),
+
+      color: ctx.editor.getAttributes("textStyle").color,
+      color: ctx.editor.getAttributes("textStyle").backgroundColor,
     }),
   });
 
@@ -327,6 +332,78 @@ function ToolBar({ editor }) {
       >
         <RedoIcon />
       </button>
+
+      <ul class="menu lg:menu-sm pt-0">
+        <li>
+          <details>
+            <summary>
+              <PaletteIcon />
+              Text Color
+            </summary>
+            <ul>
+              <li>
+                <input
+                  type="color"
+                  onInput={(event) =>
+                    editor
+                      .chain()
+                      .focus()
+                      .setColor(event.currentTarget.value)
+                      .run()
+                  }
+                  value={editorState.color || "#000000"}
+                  data-testid="setColor"
+                />
+              </li>
+              <li>
+                <button
+                  onClick={() => editor.chain().focus().unsetColor().run()}
+                  data-testid="unsetColor"
+                >
+                  Unset
+                </button>
+              </li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+
+      <ul class="menu lg:menu-sm pt-0">
+        <li>
+          <details>
+            <summary>
+              <BaselineIcon />
+              Background Color
+            </summary>
+            <ul>
+              <li>
+                <input
+                  type="color"
+                  onInput={(event) =>
+                    editor
+                      .chain()
+                      .focus()
+                      .setBackgroundColor(event.currentTarget.value)
+                      .run()
+                  }
+                  value={editorState.backgroundColor || "#000000"}
+                  data-testid="setBackgroundColor"
+                />
+              </li>
+              <li>
+                <button
+                  onClick={() =>
+                    editor.chain().focus().unsetBackgroundColor().run()
+                  }
+                  data-testid="unsetColor"
+                >
+                  Unset
+                </button>
+              </li>
+            </ul>
+          </details>
+        </li>
+      </ul>
     </div>
   );
 }
