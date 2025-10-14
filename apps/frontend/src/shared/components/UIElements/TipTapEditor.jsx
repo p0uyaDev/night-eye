@@ -476,7 +476,29 @@ function TipTapEditor({ onChange, value }) {
                 : "btn btn-sm btn-ghost"
             }
           >
-            Bold
+            <strong>Bold</strong>
+          </button>
+
+          <button
+            onClick={() => editor.chain().focus().toggleItalic().run()}
+            className={
+              editorState.isItalic
+                ? "btn btn-sm btn-primary"
+                : "btn btn-sm btn-ghost"
+            }
+          >
+            <em>Italic</em>
+          </button>
+
+          <button
+            onClick={() => editor.chain().focus().toggleUnderline().run()}
+            className={
+              editorState.isItalic
+                ? "btn btn-sm btn-primary"
+                : "btn btn-sm btn-ghost"
+            }
+          >
+            <s>Strike</s>
           </button>
         </BubbleMenu>
       )}
