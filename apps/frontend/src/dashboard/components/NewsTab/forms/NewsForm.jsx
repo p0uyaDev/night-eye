@@ -2,22 +2,24 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../../../../shared/context/AuthContext";
 import { users } from "../../../../shared/dummy"; //TODO: dummy user please add backend
+import TipTapEditor from "../../../../shared/components/UIElements/TipTapEditor";
 
 export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState(initData.title || "");
+  const [mainImage, setMainImage] = useState(initData.mainImage || "");
   const [tags, setTags] = useState(initData.tags || []);
   const [badge, setBadge] = useState(initData.badge || "");
   const [auther, setAuther] = useState(initData.author || "");
   const [categories, setCategories] = useState(initData.categories || "");
-  const [content, setContent] = useState(initData.content || "");
+  const [content, setContent] = useState();
 
   function handleSubmit(e) {
     e.preventDefault();
     {
       /*onSubmit({})*/
     }
-    console.log({ title, tags, badge, auther, categories, content }); //TODO: remove this console.log when conntected to backend
+    console.log({ title, tags, badge, auther, categories, content, mainImage }); //TODO: remove this console.log when conntected to backend
   }
 
   return (
@@ -38,7 +40,23 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
         />
         <p className="validator-hint">Required</p>
 
-        {/*TODO: add content TipTap editor field*/}
+        <label className="label">Main Image</label>
+        <input
+          type="file"
+          placeholder="News Main Image"
+          className="file-input validator"
+          value={mainImage}
+          onChange={(e) => setMainImage(e.target.value)}
+          required
+        />
+        <p className="validator-hint">Required</p>
+
+        <TipTapEditor
+          value={content}
+          onChange={(html) => {
+            setContent(html); // Update the state only when necessary
+          }}
+        />
 
         <label className="label">Tags</label>
         <input
