@@ -8,9 +8,10 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState(initData.title || "");
   const [mainImage, setMainImage] = useState(initData.mainImage || "");
+  const [description, setDescription] = useState(initData.description || "");
   const [tags, setTags] = useState(initData.tags || []);
   const [badge, setBadge] = useState(initData.badge || "");
-  const [auther, setAuther] = useState(initData.author || "");
+  const [authorId, setAuthorId] = useState(initData.writerId || user.id); //TODO: need Auth and backend
   const [categories, setCategories] = useState(initData.categories || "");
   const [content, setContent] = useState();
 
@@ -19,7 +20,18 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
     {
       /*onSubmit({})*/
     }
-    console.log({ title, tags, badge, auther, categories, content, mainImage }); //TODO: remove this console.log when conntected to backend
+    const selectedAuthor = users.find((u) => u.id == authorId);
+    console.log({
+      title,
+      tags,
+      badge,
+      authorId,
+      authorName: selectedAuthor ? selectedAuthor.name : "Unknown",
+      categories,
+      content,
+      mainImage,
+      description,
+    }); //TODO: remove this console.log when conntected to backend
   }
 
   return (
@@ -38,6 +50,16 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
           onChange={(e) => setTitle(e.target.value)}
           required
         />
+        <p className="validator-hint">Required</p>
+
+        <label className="label">News Summary</label>
+        <textarea
+          className="textarea validator"
+          placeholder="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        ></textarea>
         <p className="validator-hint">Required</p>
 
         <label className="label">Main Image</label>
@@ -82,8 +104,8 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
         <div disabled={user.role === "writer"} className="flex flex-col">
           <label className="label">Author</label>
           <select
-            value={auther}
-            onChange={(e) => setAuther(e.target.value)}
+            value={authorId}
+            onChange={(e) => setAuthorId(e.target.value)}
             className="select w-full"
           >
             <option value={`${user.id}`}>{user.name}</option>
