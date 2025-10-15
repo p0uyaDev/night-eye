@@ -1,6 +1,7 @@
 import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
 
 import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import { BubbleMenu, FloatingMenu } from "@tiptap/react/menus";
 
@@ -23,6 +24,7 @@ import {
   Heading1 as Heading1Icon,
   Heading2 as Heading2Icon,
   Heading3 as Heading3Icon,
+  Link as LinkIcon,
   Image as ImageIcon,
   Palette as PaletteIcon,
   Baseline as BaselineIcon,
@@ -309,6 +311,39 @@ function ToolBar({ editor, editorState }) {
         </svg>
       </button>
 
+      <button
+        className={
+          editorState.isLink ? "btn btn-sm btn-primary" : "btn btn-sm btn-ghost"
+        }
+        onClick={() => {
+          const isLinked = editor.isActive("link");
+
+          if (isLinked) {
+            // remove link if already active
+            editor.chain().focus().unsetLink().run();
+            return;
+          }
+
+          // otherwise, ask for a new link
+          const url = window.prompt("Enter the link URL:");
+          if (!url) return; // user cancelled
+
+          try {
+            new URL(url); // validate
+            editor
+              .chain()
+              .focus()
+              .extendMarkRange("link")
+              .setLink({ href: url })
+              .run();
+          } catch {
+            alert("Invalid URL");
+          }
+        }}
+      >
+        <LinkIcon />
+      </button>
+
       <ul className="menu lg:menu-sm pt-0">
         <li>
           <details>
@@ -430,6 +465,14 @@ function TipTapEditor({ onChange, value }) {
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
+      Link.configure({
+        openOnClick: false,
+        HTMLAttributes: {
+          rel: "noopener noreferrer",
+          target: "_blank",
+          class: "underline hover:text-accent text-secondary cursor-pointer",
+        },
+      }),
     ],
     content: value,
     onUpdate: ({ editor }) => {
@@ -450,6 +493,7 @@ function TipTapEditor({ onChange, value }) {
       isBulletList: ctx.editor.isActive("bulletList"),
       isOrderedList: ctx.editor.isActive("orderedList"),
       isBlockquote: ctx.editor.isActive("blockquote"),
+      isLink: ctx.editor.isActive("link"),
 
       canUndo: ctx.editor.can().chain().undo().run(),
       canRedo: ctx.editor.can().chain().redo().run(),
@@ -491,9 +535,9 @@ function TipTapEditor({ onChange, value }) {
           </button>
 
           <button
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
+            onClick={() => editor.chain().focus().toggleStrike().run()}
             className={
-              editorState.isItalic
+              editorState.isStrike
                 ? "btn btn-sm btn-primary"
                 : "btn btn-sm btn-ghost"
             }
