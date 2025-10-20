@@ -34,7 +34,7 @@ function openFileDialog(accept = "*/*") {
   return new Promise((resolve) => {
     const input = document.createElement("input");
     ((input.type = "file"), (input.accept = accept));
-    input.onchnage = () => resolve(input.files[0]);
+    input.onChange = () => resolve(input.files[0]);
     input.click();
   });
 }
@@ -52,6 +52,7 @@ function ToolBar({ editor, editorState }) {
             alert("Invalid URL, Please enter a valid link!");
           }
         }
+        break;
       case File:
         console.log("file uploaded"); //TODO: need backend
     }

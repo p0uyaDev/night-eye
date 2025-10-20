@@ -15,6 +15,11 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
   const [categories, setCategories] = useState(initData.categories || "");
   const [content, setContent] = useState();
 
+  const selectedAuthor = useMemo(
+    () => users.find((u) => u.id == authorId),
+    [authorId],
+  );
+
   function handleSubmit(e) {
     e.preventDefault();
     {
@@ -26,11 +31,6 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
       alert("please write some content before submit");
       return;
     }
-
-    const selectedAuthor = useMemo(
-      () => users.find((u) => u.id == authorId),
-      [authorId],
-    );
 
     console.log({
       title,
