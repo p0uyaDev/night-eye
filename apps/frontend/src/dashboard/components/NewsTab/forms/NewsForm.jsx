@@ -12,7 +12,7 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
   const [tags, setTags] = useState(initData.tags || []);
   const [badge, setBadge] = useState(initData.badge || "");
   const [authorId, setAuthorId] = useState(initData.writerId || user.id); //TODO: need Auth and backend
-  const [categories, setCategories] = useState(initData.categories || "");
+  const [category, setCategory] = useState(initData.category || "");
   const [content, setContent] = useState();
 
   const selectedAuthor = useMemo(
@@ -32,17 +32,25 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
       return;
     }
 
-    console.log({
+    const payload = {
       title,
       tags,
       badge,
       authorId,
       authorName: selectedAuthor ? selectedAuthor.name : "Unknown",
-      categories,
+      category,
       content,
       mainImage,
       description,
-    }); //TODO: remove this console.log when conntected to backend
+    }; //TODO: remove this console.log when conntected to backend
+
+    if (mainImage instanceof File) {
+      payload.mainImage = mainImage;
+    } else if (mainImage) {
+      payload.mainImage = mainImage;
+    }
+
+    console.log(payload); //TODO: need backend and remove console.log
   }
 
   return (
@@ -71,14 +79,17 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
             placeholder="News Main Image"
             className="file-input validator"
             onChange={(e) => setMainImage(e.target.files?.[0] || null)}
-            required
           />
-          <p className="validator-hint">Required</p>
+          <p className="validator-hint">
+            {mode === "update"
+              ? "Leave empty to keep existing image"
+              : "Required"}
+          </p>
 
           <label className="label">Categories</label>
           <select
-            value={categories}
-            onChange={(e) => setCategories(e.target.value)}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
             className="select w-full required validator max-w-50"
             required
           >
@@ -106,7 +117,11 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
           {mainImage && (
             <img
               className="w-32 h-32 rounded-lg object-cover border"
-              src={URL.createObjectURL(mainImage)}
+              src={
+                mainImage instanceof File
+                  ? URL.createObjectURL(mainImage)
+                  : mainImage
+              }
               alt="Preview News Image"
             />
           )}

@@ -3,7 +3,12 @@ import { users } from "../../../../../shared/dummy";
 import Tags from "../../../../../shared/components/UIElements/Tag";
 import NewsTableActions from "../util/NewsTableActions";
 
-export default function NewsTableBody({ newsItem, isSelected, toggleRow }) {
+export default function NewsTableBody({
+  newsItem,
+  isSelected,
+  toggleRow,
+  onEdit,
+}) {
   const writer = users.find((u) => u.id === newsItem.writerId);
 
   return (
@@ -64,7 +69,7 @@ export default function NewsTableBody({ newsItem, isSelected, toggleRow }) {
           <NewsTableActions
             newsItem={newsItem}
             actions={["view", "edit", "delete", "archive"]}
-            onEdit={(item) => console.log("Edit: ", item)}
+            onEdit={onEdit}
             onDelete={(item) => console.log("Delete: ", item)}
             onArchive={(item) => console.log("Archive: ", item)}
             mode="row"

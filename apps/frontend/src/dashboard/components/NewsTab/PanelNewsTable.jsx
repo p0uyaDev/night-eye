@@ -63,6 +63,12 @@ export default function PanelNewsTable() {
     );
   }
 
+  function handleEdit(newsItem) {
+    window.dispatchEvent(
+      new CustomEvent("open-update-tab", { detail: newsItem }),
+    );
+  }
+
   function toggleAll(event) {
     if (event.target.checked) {
       setSelectedIds(panelNewsFiltered.map((n) => n.id));
@@ -112,6 +118,7 @@ export default function PanelNewsTable() {
               newsItem={n}
               isSelected={selectedIds.includes(n.id)}
               toggleRow={() => toggleRow(n.id)}
+              onEdit={handleEdit}
             />
           );
         })}

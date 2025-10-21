@@ -1,14 +1,36 @@
 //TODO: need condition for writers!
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../shared/context/AuthContext";
 import PanelLayout from "../../Layouts/PanelLayout";
 import PanelGuard from "../components/util/PanelGuard";
 import PanelNewsTable from "../components/NewsTab/PanelNewsTable";
 import PanelNewsCreate from "../components/NewsTab/PanelNewsCreate";
+import NewsForm from "../components/NewsTab/forms/NewsForm";
 
 function Panel() {
   const { isAdmin, isOwner, isWriter } = useContext(AuthContext);
+
+  const [showUpdateTab, setShowUpdateTab] = useState(false);
+  const [newsToUpdate, setNewsToUpdate] = useState(null);
+
+  useEffect(() => {
+    function handleOpenUpdateTab(e) {
+      setNewsToUpdate(e.detail);
+      setShowUpdateTab(true);
+
+      setTimeout(() => {
+        const updateTab = document.querySelector(
+          'input[name="news_tab"][aria-label="🔁 Update News"]',
+        );
+        if (updateTab) updateTab.checked = true;
+      }, 50);
+    }
+
+    window.addEventListener("open-update-tab", handleOpenUpdateTab);
+    return () =>
+      window.removeEventListener("open-update-tab", handleOpenUpdateTab);
+  });
 
   return (
     <>
@@ -76,6 +98,24 @@ function Panel() {
                   <PanelNewsCreate />
                 </article>
               </div>
+
+              {showUpdateTab && (
+                <>
+                  <input
+                    type="radio"
+                    name="news_tab"
+                    className="tab"
+                    aria-label="🔁 Update News"
+                  />
+                  <article className="tab-content border-base-300 bg-base-100 p-10">
+                    <NewsForm
+                      key={newsToUpdate?._id || newsToUpdate?.id || "new"}
+                      mode="update"
+                      initData={newsToUpdate}
+                    />
+                  </article>
+                </>
+              )}
             </PanelGuard>
           </section>
 

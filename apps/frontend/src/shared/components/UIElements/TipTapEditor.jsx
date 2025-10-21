@@ -3,7 +3,7 @@ import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import { TextStyleKit } from "@tiptap/extension-text-style";
-import { BubbleMenu, FloatingMenu } from "@tiptap/react/menus";
+import { BubbleMenu } from "@tiptap/react/menus";
 
 import Image from "@tiptap/extension-image";
 import Highlight from "@tiptap/extension-highlight";
