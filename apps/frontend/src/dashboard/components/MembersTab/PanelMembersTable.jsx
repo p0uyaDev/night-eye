@@ -1,7 +1,12 @@
+import MembersTableBody from "./table/layouts/MembersTableBody";
+import { users } from "../../../shared/dummy";
+
 export default function PanelMembersTable() {
   return (
-    <div>
-      <h1>It is Members table</h1>
-    </div>
+    <table className="table w-3/5">
+      {users.map((u) => {
+        return <MembersTableBody key={u.id} membersItem={u} />;
+      })}
+    </table>
   );
 }
