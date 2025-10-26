@@ -63,7 +63,26 @@ function Panel() {
                   aria-label="👤 Members"
                 />
                 <section className="tab-content bg-base-100 border-base-300 p-6">
-                  <PanelMembersTable />
+                  <div className="tabs tabs-border">
+                    <input
+                      type="radio"
+                      name="members_tab"
+                      className="tab"
+                      aria-label="👥 Members Table"
+                      defaultChecked
+                    />
+                    <article className="tab-content border-base-300 bg-base-100 p-10">
+                      <PanelMembersTable />
+                    </article>
+
+                    <input
+                      type="radio"
+                      name="members_tab"
+                      className="tab"
+                      aria-label="➕ Create Member"
+                    />
+                    <article className="tab-content border-base-300 bg-base-100 p-10"></article>
+                  </div>
                 </section>
               </>
             )}
