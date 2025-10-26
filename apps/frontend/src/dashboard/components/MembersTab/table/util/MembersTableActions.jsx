@@ -10,7 +10,8 @@ export default function MembersTableActions({
   actions = ["edit", "delete"],
   mode = "row",
 }) {
-  const { isAdmin, isOwner, id: currentUserId } = useContext(AuthContext);
+  const { id: currentUserId, isAdmin, isOwner } = useContext(AuthContext);
+
   const canModify =
     (isOwner && membersItem.id !== currentUserId) ||
     (isAdmin &&
@@ -35,11 +36,12 @@ export default function MembersTableActions({
 
   const actionItems = actions
     .map((action) => actionMap[action])
-    .filter(Boolean);
+    .filter(Boolean)
+    .filter((a) => typeof a.onClick === "function");
 
-  return (
-    <div disabled={!canModify}>
-      <Actions items={membersItem} actions={actionItems} mode={mode} />
-    </div>
-  );
+  if (!canModify || actionItems.length === 0) {
+    return null;
+  }
+
+  return <Actions item={membersItem} actions={actionItems} mode={mode} />;
 }

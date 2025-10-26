@@ -1,7 +1,7 @@
 //TODO: need backend for get data from database
 import MembersTableActions from "../util/MembersTableActions";
 
-export default function MembersTableBody({ membersItem, onEdit }) {
+export default function MembersTableBody({ membersItem, onEdit, onDelete }) {
   return (
     <tbody>
       <tr>
@@ -27,6 +27,7 @@ export default function MembersTableBody({ membersItem, onEdit }) {
           <MembersTableActions
             membersItem={membersItem}
             onEdit={onEdit}
+            onDelete={onDelete}
             actions={["edit", "delete"]}
           />
         </td>
