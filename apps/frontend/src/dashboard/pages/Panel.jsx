@@ -8,6 +8,7 @@ import PanelNewsTable from "../components/NewsTab/PanelNewsTable";
 import PanelNewsCreate from "../components/NewsTab/PanelNewsCreate";
 import NewsForm from "../components/NewsTab/forms/NewsForm";
 import PanelMembersTable from "../components/MembersTab/PanelMembersTable";
+import MembersForm from "../components/MembersTab/forms/MembersForm";
 
 function Panel() {
   const { isAdmin, isOwner, isWriter } = useContext(AuthContext);
@@ -81,7 +82,9 @@ function Panel() {
                       className="tab"
                       aria-label="➕ Create Member"
                     />
-                    <article className="tab-content border-base-300 bg-base-100 p-10"></article>
+                    <article className="tab-content border-base-300 bg-base-100 p-10">
+                      <MembersForm />
+                    </article>
                   </div>
                 </section>
               </>
