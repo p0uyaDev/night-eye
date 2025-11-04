@@ -4,7 +4,12 @@ import { AuthContext } from "../../../../shared/context/AuthContext";
 import { users } from "../../../../shared/dummy"; //TODO: dummy user please add backend
 import TipTapEditor from "../../../../shared/components/UIElements/TipTapEditor";
 
-export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
+export default function NewsForm({
+  mode = "create",
+  initData = {},
+  onUpdate,
+  onSubmit,
+}) {
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState(initData.title || "");
   const [mainImage, setMainImage] = useState(initData.mainImage || "");
@@ -51,6 +56,10 @@ export default function NewsForm({ mode = "create", initData = {}, onSubmit }) {
     }
 
     console.log(payload); //TODO: need backend and remove console.log
+
+    if (mode === "update" && onUpdate) {
+      onUpdate();
+    }
   }
 
   return (

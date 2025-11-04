@@ -18,6 +18,9 @@ function Panel() {
   const [newsToUpdate, setNewsToUpdate] = useState(null);
   const [membersToFullEdit, setMembersToFullEdit] = useState(null);
 
+  const [acitveMembersTab, setActiveMembersTab] = useState("table");
+  const [acitveNewsTab, setActiveNewsTab] = useState("table");
+
   useEffect(() => {
     function handleOpenUpdateTabNews(e) {
       setNewsToUpdate(e.detail);
@@ -99,7 +102,8 @@ function Panel() {
                       name="members_tab"
                       className="tab"
                       aria-label="👥 Members Table"
-                      defaultChecked
+                      checked={acitveMembersTab === "table"}
+                      onChange={() => setActiveMembersTab("table")}
                     />
                     <article className="tab-content border-base-300 bg-base-100 p-10">
                       <PanelMembersTable />
@@ -110,6 +114,8 @@ function Panel() {
                       name="members_tab"
                       className="tab"
                       aria-label="➕ Create Member"
+                      checked={acitveMembersTab === "create"}
+                      onChange={() => setActiveMembersTab("create")}
                     />
                     <article className="tab-content border-base-300 bg-base-100 p-10">
                       <MembersForm />
@@ -133,6 +139,11 @@ function Panel() {
                           }
                           mode="update"
                           initData={membersToFullEdit}
+                          onUpdate={() => {
+                            setShowUpdateTabMembers(false);
+                            setMembersToFullEdit(null);
+                            setActiveMembersTab("table");
+                          }}
                         />
                       </article>
                     </>
@@ -155,7 +166,8 @@ function Panel() {
                   name="news_tab"
                   className="tab"
                   aria-label="🗂️ News Table"
-                  defaultChecked
+                  checked={acitveNewsTab === "table"}
+                  onChange={() => setActiveNewsTab("table")}
                 />
                 <article className="tab-content border-base-300 bg-base-100 p-10">
                   <PanelNewsTable />
@@ -166,6 +178,8 @@ function Panel() {
                   name="news_tab"
                   className="tab"
                   aria-label="✏️ Create News"
+                  checked={acitveNewsTab === "create"}
+                  onChange={() => setActiveNewsTab("create")}
                 />
                 <article className="tab-content border-base-300 bg-base-100 p-10">
                   <PanelNewsCreate />
@@ -185,6 +199,11 @@ function Panel() {
                       key={newsToUpdate?._id || newsToUpdate?.id || "new"}
                       mode="update"
                       initData={newsToUpdate}
+                      onUpdate={() => {
+                        setShowUpdateTabNews(false);
+                        setNewsToUpdate(null);
+                        setActiveNewsTab("table");
+                      }}
                     />
                   </article>
                 </>

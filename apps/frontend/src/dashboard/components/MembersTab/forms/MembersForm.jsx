@@ -5,6 +5,7 @@ export default function MembersForm({
   mode = "create",
   initData = {},
   onSubmit,
+  onUpdate,
 }) {
   const [name, setName] = useState(initData.name || "");
   const [role, setRole] = useState(initData.role || "");
@@ -47,6 +48,10 @@ export default function MembersForm({
     }
 
     console.log(payload); //TODO: remove this console.log when conntected to backend
+
+    if (mode === "update" && onUpdate) {
+      onUpdate();
+    }
   }
 
   return (
