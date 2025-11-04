@@ -1,13 +1,18 @@
 //TODO: MembersForm need backend and database to submit data
 import { useState } from "react";
 
-export default function MembersForm({ initData = {}, onSubmit }) {
+export default function MembersForm({
+  mode = "create",
+  initData = {},
+  onSubmit,
+}) {
   const [name, setName] = useState(initData.name || "");
   const [role, setRole] = useState(initData.role || "");
   const [email, setEmail] = useState(initData.email || "");
   const [password, setPassword] = useState(initData.password || "");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [avatar, setAvatar] = useState(initData.avatar || "");
+
   //TODO: need secure hashed password from backend
 
   function handleSubmit(e) {
@@ -143,7 +148,7 @@ export default function MembersForm({ initData = {}, onSubmit }) {
 
       <div className="flex flex-col mt-4 justify-center items-center">
         <button type="submit" className="btn btn-primary">
-          Register Member
+          {mode === "create" ? "Register Member" : "Update Member"}
         </button>
       </div>
     </form>
