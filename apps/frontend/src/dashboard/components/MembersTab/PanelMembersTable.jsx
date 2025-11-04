@@ -15,13 +15,20 @@ export default function PanelMembersTable() {
     filteredMembers = filteredMembers.filter((u) => u.role !== "writer");
   }
 
-  function handleDelete() {
+  function handleKick(user) {
     //TODO: temp function
-    console.log("User with id", u.id, "deleted", u.id);
+    console.log("User with id", user.id, "kicked", user.id);
   }
 
-  function handleEdit(id) {
-    console.log("User with id", u.id, "edited", u.id);
+  function handleEdit(user) {
+    //TODO: temp function
+    console.log("User with id", user.id, "edited", user.id);
+  }
+
+  function handleFullEdit(user) {
+    window.dispatchEvent(
+      new CustomEvent("open-update-tab-members", { detail: user }),
+    );
   }
 
   return (
@@ -32,8 +39,9 @@ export default function PanelMembersTable() {
           <MembersTableBody
             key={u.id}
             membersItem={u}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
+            onKick={() => handleKick(u)}
+            onEdit={() => handleEdit(u)}
+            onFullEdit={() => handleFullEdit(u)}
           />
         );
       })}
