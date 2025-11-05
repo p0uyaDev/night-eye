@@ -217,8 +217,32 @@ function Panel() {
               aria-label="⚙️ Settings"
             />
             <section className="tab-content bg-base-100 border-base-300 p-6">
-              User Settings
-              {/* TODO: WIP tab feature! */}
+              <div className="tabs tabs-border">
+                <input
+                  type="radio"
+                  name="settings_tab"
+                  className="tab"
+                  aria-label="🪪 Profile Settings"
+                  defaultChecked
+                />
+                <article className="tab-content border-base-300 bg-base-100 p-10">
+                  {/* TODO: WIP tab feature! */}
+                </article>
+
+                {(isAdmin || isOwner) && (
+                  <>
+                    <input
+                      type="radio"
+                      name="settings_tab"
+                      className="tab"
+                      aria-label="🌐 Website Settings"
+                    />
+                    <article className="tab-content border-base-300 bg-base-100 p-10">
+                      {/* TODO: WIP tab feature! */}
+                    </article>
+                  </>
+                )}
+              </div>
             </section>
           </div>
         </PanelGuard>
