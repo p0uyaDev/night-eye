@@ -65,7 +65,7 @@ export default function PanelNewsTable() {
 
   function handleEdit(newsItem) {
     window.dispatchEvent(
-      new CustomEvent("open-update-tab", { detail: newsItem }),
+      new CustomEvent("open-update-tab-news", { detail: newsItem }),
     );
   }
 

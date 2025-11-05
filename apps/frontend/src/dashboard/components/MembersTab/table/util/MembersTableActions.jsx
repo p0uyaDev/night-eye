@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { SquarePen, Delete } from "lucide-react";
+import { SquarePen, UserX } from "lucide-react";
 import Actions from "../../../../../shared/components/UIElements/Actions";
 import { AuthContext } from "../../../../../shared/context/AuthContext";
 
 export default function MembersTableActions({
   membersItem,
-  onEdit,
-  onDelete,
-  actions = ["edit", "delete"],
+  onKick,
+  onFullEdit,
+  actions = ["edit", "kick"],
   mode = "row",
 }) {
   const { id: currentUserId, isAdmin, isOwner } = useContext(AuthContext);
@@ -21,15 +21,16 @@ export default function MembersTableActions({
 
   const actionMap = {
     edit: {
-      label: "Edit",
+      label: "Full Edit",
       icon: SquarePen,
-      onClick: onEdit,
-      color: "text-info",
+      onClick: onFullEdit,
+      color: "text-primary",
     },
-    delete: {
-      label: "Delete",
-      icon: Delete,
-      onClick: onDelete,
+
+    kick: {
+      label: "Kick",
+      icon: UserX,
+      onClick: onKick,
       color: "text-error",
     },
   };

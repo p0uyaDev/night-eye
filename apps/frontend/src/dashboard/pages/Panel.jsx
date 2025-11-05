@@ -8,29 +8,62 @@ import PanelNewsTable from "../components/NewsTab/PanelNewsTable";
 import PanelNewsCreate from "../components/NewsTab/PanelNewsCreate";
 import NewsForm from "../components/NewsTab/forms/NewsForm";
 import PanelMembersTable from "../components/MembersTab/PanelMembersTable";
+import MembersForm from "../components/MembersTab/forms/MembersForm";
 
 function Panel() {
   const { isAdmin, isOwner, isWriter } = useContext(AuthContext);
 
-  const [showUpdateTab, setShowUpdateTab] = useState(false);
+  const [showUpdateTabNews, setShowUpdateTabNews] = useState(false);
+  const [showUpdateTabMembers, setShowUpdateTabMembers] = useState(false);
   const [newsToUpdate, setNewsToUpdate] = useState(null);
+  const [membersToFullEdit, setMembersToFullEdit] = useState(null);
+
+  const [acitveMembersTab, setActiveMembersTab] = useState("table");
+  const [acitveNewsTab, setActiveNewsTab] = useState("table");
 
   useEffect(() => {
-    function handleOpenUpdateTab(e) {
+    function handleOpenUpdateTabNews(e) {
       setNewsToUpdate(e.detail);
-      setShowUpdateTab(true);
+      setShowUpdateTabNews(true);
 
       setTimeout(() => {
-        const updateTab = document.querySelector(
+        const updateTabNews = document.querySelector(
           'input[name="news_tab"][aria-label="🔁 Update News"]',
         );
-        if (updateTab) updateTab.checked = true;
+        if (updateTabNews) updateTabNews.checked = true;
       }, 50);
     }
 
-    window.addEventListener("open-update-tab", handleOpenUpdateTab);
+    window.addEventListener("open-update-tab-news", handleOpenUpdateTabNews);
     return () =>
-      window.removeEventListener("open-update-tab", handleOpenUpdateTab);
+      window.removeEventListener(
+        "open-update-tab-news",
+        handleOpenUpdateTabNews,
+      );
+  });
+
+  useEffect(() => {
+    function handleOpenUpdateTabMembers(e) {
+      setMembersToFullEdit(e.detail);
+      setShowUpdateTabMembers(true);
+
+      setTimeout(() => {
+        const updateTabMember = document.querySelector(
+          'input[name="members_tab"][aria-label="📝 Update Member"]',
+        );
+        if (updateTabMember) updateTabMember.checked = true;
+      }, 50);
+    }
+
+    window.addEventListener(
+      "open-update-tab-members",
+      handleOpenUpdateTabMembers,
+    );
+    return () =>
+      window.removeEventListener(
+        "open-update-tab-members",
+        handleOpenUpdateTabMembers,
+      );
   });
 
   return (
@@ -69,7 +102,8 @@ function Panel() {
                       name="members_tab"
                       className="tab"
                       aria-label="👥 Members Table"
-                      defaultChecked
+                      checked={acitveMembersTab === "table"}
+                      onChange={() => setActiveMembersTab("table")}
                     />
                     <article className="tab-content border-base-300 bg-base-100 p-10">
                       <PanelMembersTable />
@@ -80,9 +114,40 @@ function Panel() {
                       name="members_tab"
                       className="tab"
                       aria-label="➕ Create Member"
+                      checked={acitveMembersTab === "create"}
+                      onChange={() => setActiveMembersTab("create")}
                     />
-                    <article className="tab-content border-base-300 bg-base-100 p-10"></article>
+                    <article className="tab-content border-base-300 bg-base-100 p-10">
+                      <MembersForm />
+                    </article>
                   </div>
+
+                  {showUpdateTabMembers && (
+                    <>
+                      <input
+                        type="radio"
+                        name="members_tab"
+                        className="tab"
+                        aria-label="📝 Update Member"
+                      />
+                      <article className="tab-content border-base-300 bg-base-100 p-10">
+                        <MembersForm
+                          key={
+                            membersToFullEdit?._id ||
+                            membersToFullEdit?.id ||
+                            "member"
+                          }
+                          mode="update"
+                          initData={membersToFullEdit}
+                          onUpdate={() => {
+                            setShowUpdateTabMembers(false);
+                            setMembersToFullEdit(null);
+                            setActiveMembersTab("table");
+                          }}
+                        />
+                      </article>
+                    </>
+                  )}
                 </section>
               </>
             )}
@@ -101,7 +166,8 @@ function Panel() {
                   name="news_tab"
                   className="tab"
                   aria-label="🗂️ News Table"
-                  defaultChecked
+                  checked={acitveNewsTab === "table"}
+                  onChange={() => setActiveNewsTab("table")}
                 />
                 <article className="tab-content border-base-300 bg-base-100 p-10">
                   <PanelNewsTable />
@@ -112,13 +178,15 @@ function Panel() {
                   name="news_tab"
                   className="tab"
                   aria-label="✏️ Create News"
+                  checked={acitveNewsTab === "create"}
+                  onChange={() => setActiveNewsTab("create")}
                 />
                 <article className="tab-content border-base-300 bg-base-100 p-10">
                   <PanelNewsCreate />
                 </article>
               </div>
 
-              {showUpdateTab && (
+              {showUpdateTabNews && (
                 <>
                   <input
                     type="radio"
@@ -131,6 +199,11 @@ function Panel() {
                       key={newsToUpdate?._id || newsToUpdate?.id || "new"}
                       mode="update"
                       initData={newsToUpdate}
+                      onUpdate={() => {
+                        setShowUpdateTabNews(false);
+                        setNewsToUpdate(null);
+                        setActiveNewsTab("table");
+                      }}
                     />
                   </article>
                 </>
