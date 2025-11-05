@@ -23,7 +23,7 @@ export default function MembersForm({
       /*onSubmit({})*/
     }
 
-    if (!name || !role || !email || !password || !role) {
+    if (!name || !role || !email || !role || (!password && mode === "create")) {
       alert("Please fill in all fields");
       return;
     }
@@ -50,8 +50,11 @@ export default function MembersForm({
     console.log(payload); //TODO: remove this console.log when conntected to backend
 
     if (mode === "update" && onUpdate) {
-      onUpdate();
+      onUpdate?.(payload);
+      return;
     }
+
+    onSubmit?.(payload);
   }
 
   return (
@@ -84,7 +87,7 @@ export default function MembersForm({
             className="input validator"
             value={password}
             onChange={(e) => setPassword(e.target.value)} //Not Safe
-            required
+            required={mode === "create"}
           />
           <p className="validator-hint">Required</p>
 
@@ -98,7 +101,7 @@ export default function MembersForm({
             }`}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+            required={mode === "create"}
           />
           <p
             className={`validator-hint ${confirmPassword && confirmPassword !== password ? "text-error" : ""}`}

@@ -12,6 +12,12 @@ export default function MembersTableBody({
   const [editedDate, setEditedDate] = useState(membersItem);
   const rowRef = useRef(null);
 
+  useEffect(() => {
+    if (!isEditing) {
+      setEditedDate(membersItem);
+    }
+  }, [membersItem, isEditing]);
+
   function handleChange(event) {
     const { name, value } = event.target;
     setEditedDate((prev) => ({ ...prev, [name]: value }));
