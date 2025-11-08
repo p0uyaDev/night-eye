@@ -9,6 +9,7 @@ import PanelNewsCreate from "../components/NewsTab/PanelNewsCreate";
 import NewsForm from "../components/NewsTab/forms/NewsForm";
 import PanelMembersTable from "../components/MembersTab/PanelMembersTable";
 import MembersForm from "../components/MembersTab/forms/MembersForm";
+import PanelSettingsProfile from "../components/SettingsTab/PanelSettingsProfile";
 
 function Panel() {
   const { isAdmin, isOwner, isWriter } = useContext(AuthContext);
@@ -226,7 +227,7 @@ function Panel() {
                   defaultChecked
                 />
                 <article className="tab-content border-base-300 bg-base-100 p-10">
-                  {/* TODO: WIP tab feature! */}
+                  <PanelSettingsProfile />
                 </article>
 
                 {(isAdmin || isOwner) && (
