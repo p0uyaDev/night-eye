@@ -118,6 +118,7 @@ function Panel() {
                       checked={acitveMembersTab === "create"}
                       onChange={() => setActiveMembersTab("create")}
                     />
+
                     <article className="tab-content border-base-300 bg-base-100 p-10">
                       <MembersForm />
                     </article>
@@ -132,6 +133,19 @@ function Panel() {
                         aria-label="📝 Update Member"
                       />
                       <article className="tab-content border-base-300 bg-base-100 p-10">
+                        <div className="flex justify-end mb-4">
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-outline btn-error"
+                            onClick={() => {
+                              setShowUpdateTabMembers(false);
+                              setMembersToFullEdit(null);
+                              setActiveMembersTab("table");
+                            }}
+                          >
+                            ✕
+                          </button>
+                        </div>
                         <MembersForm
                           key={
                             membersToFullEdit?._id ||
@@ -196,6 +210,20 @@ function Panel() {
                     aria-label="🔁 Update News"
                   />
                   <article className="tab-content border-base-300 bg-base-100 p-10">
+                    <div className="flex justify-end mb-4">
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-outline btn-error"
+                        onClick={() => {
+                          setShowUpdateTabNews(false);
+                          setNewsToUpdate(null);
+                          setActiveNewsTab("table");
+                        }}
+                      >
+                        ✕
+                      </button>
+                    </div>
+
                     <NewsForm
                       key={newsToUpdate?._id || newsToUpdate?.id || "new"}
                       mode="update"

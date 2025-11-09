@@ -1,10 +1,8 @@
 //TODO: MembersForm need backend and database to submit data
 import { useState } from "react";
-
 export default function MembersForm({
   mode = "create",
   initData = {},
-  onSubmit,
   onUpdate,
 }) {
   const [name, setName] = useState(initData.name || "");
