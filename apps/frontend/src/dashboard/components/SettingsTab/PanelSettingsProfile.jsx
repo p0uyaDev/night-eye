@@ -1,5 +1,5 @@
 //TODO: panel profile settings need backend
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../shared/context/AuthContext";
 
 export default function PanelSettingsProfile({ onSubmit }) {
@@ -9,16 +9,30 @@ export default function PanelSettingsProfile({ onSubmit }) {
   const [password, setPassword] = useState(user.password || "");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [avatar, setAvatar] = useState(user.avatar || "");
+  const [isChanged, setIsChanged] = useState(false);
 
   const passwordChanged = password !== user.password;
 
   //TODO: need secure hashed password from backend
+
+  useEffect(() => {
+    const hasChange =
+      name !== user.name ||
+      email !== user.email ||
+      password !== user.password ||
+      avatar !== user.avatar;
+    setIsChanged(hasChange);
+  }, [name, email, password, avatar, user]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     {
       /*onSubmit({})*/
+    }
+
+    if (!isChanged) {
+      return;
     }
 
     if (!name || !email || !password) {
@@ -45,8 +59,8 @@ export default function PanelSettingsProfile({ onSubmit }) {
     }
 
     console.log(payload); //TODO: remove this console.log when conntected to backend
-
     onSubmit?.(payload);
+    setIsChanged(false);
   }
 
   return (
@@ -134,11 +148,13 @@ export default function PanelSettingsProfile({ onSubmit }) {
         </div>
       </fieldset>
 
-      <div className="flex flex-col mt-4 justify-center items-center">
-        <button type="submit" className="btn btn-primary">
-          Update
-        </button>
-      </div>
+      {isChanged && (
+        <div className="flex flex-col mt-4 justify-center items-center">
+          <button type="submit" className="btn btn-primary">
+            Update
+          </button>
+        </div>
+      )}
     </form>
   );
 }
