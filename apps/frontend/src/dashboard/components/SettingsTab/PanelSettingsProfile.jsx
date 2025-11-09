@@ -10,6 +10,8 @@ export default function PanelSettingsProfile({ onSubmit }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [avatar, setAvatar] = useState(user.avatar || "");
 
+  const passwordChanged = password !== user.password;
+
   //TODO: need secure hashed password from backend
 
   function handleSubmit(e) {
@@ -24,7 +26,7 @@ export default function PanelSettingsProfile({ onSubmit }) {
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (passwordChanged && password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
@@ -81,25 +83,28 @@ export default function PanelSettingsProfile({ onSubmit }) {
           />
           <p className="validator-hint">Required</p>
 
-          <label className="label">Confirm Password</label>
-          <input
-            type="password"
-            className={`input validator ${
-              confirmPassword && confirmPassword !== password
-                ? "border-error"
-                : ""
-            }`}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-          <p
-            className={`validator-hint ${confirmPassword && confirmPassword !== password ? "text-error" : ""}`}
-          >
-            {confirmPassword && confirmPassword !== password
-              ? "Password does not match"
-              : "Required"}
-          </p>
+          {passwordChanged && (
+            <>
+              <label className="label">Confirm Password</label>
+              <input
+                type="password"
+                className={`input validator ${
+                  confirmPassword && confirmPassword !== password
+                    ? "border-error"
+                    : ""
+                }`}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <p
+                className={`validator-hint ${confirmPassword && confirmPassword !== password ? "text-error" : ""}`}
+              >
+                {confirmPassword && confirmPassword !== password
+                  ? "Password does not match"
+                  : "Required"}
+              </p>
+            </>
+          )}
         </div>
 
         <div className="flex flex-col gap-2">

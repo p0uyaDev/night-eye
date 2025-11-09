@@ -239,7 +239,7 @@ function Panel() {
                       aria-label="🌐 Website Settings"
                     />
                     <article className="tab-content border-base-300 bg-base-100 p-10">
-                      {/* TODO: WIP tab feature! */}
+                      TODO: some admin features not complete yet!
                     </article>
                   </>
                 )}
