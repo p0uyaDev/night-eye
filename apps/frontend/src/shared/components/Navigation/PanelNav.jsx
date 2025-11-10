@@ -1,7 +1,17 @@
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import BaseNav from "./BaseNav";
 
-//TODO: It should connect to Auth API & and also fix Avatar
 function PanelNav({ links }) {
+  const { user, logout } = useContext(AuthContext); //TODO: enhance auth context
+
+  function handleLogout() {
+    logout();
+    window.location.reload();
+    window.location.href = "/";
+  }
+
   return (
     <BaseNav links={links}>
       <div className="dropdown dropdown-end px-4">
@@ -11,25 +21,18 @@ function PanelNav({ links }) {
           className="btn btn-ghost btn-circle avatar"
         >
           <div className="w-10 rounded-full">
-            <img
-              alt="User Avatar"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-            />
+            <img src={user.avatar} alt={`${user.name} avatar`} />
           </div>
         </div>
         <ul
           tabIndex={0}
           className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
         >
-          {/*TODO: Need API and Dashboard functions*/}
           <li>
-            <a>Dashboard</a>
+            <NavLink to="/panel">Dashboard</NavLink>
           </li>
           <li>
-            <a>Settings</a>
-          </li>
-          <li>
-            <a>Logout</a>
+            <button onClick={handleLogout}>Logout</button>
           </li>
         </ul>
       </div>

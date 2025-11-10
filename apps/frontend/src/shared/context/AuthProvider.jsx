@@ -27,6 +27,7 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(() => {
     setUser(null);
+    localStorage.removeItem("user"); //TODO: need backend and cookies system
   }, []);
 
   const isLoggedIn = !!user;
