@@ -7,6 +7,7 @@ import { AuthContext } from "./shared/context/AuthContext";
 import { AuthProvider } from "./shared/context/AuthProvider";
 import UnderMaintenance from "./pages/UnderMaintenance";
 import { SettingsContext } from "./shared/context/SettingsContext";
+import SettingsProvider from "./shared/context/SettingsProvider";
 
 import "./App.css";
 
@@ -14,10 +15,12 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <AlertProvider>
-          <ScrollToTop />
-          <AppRoutes />
-        </AlertProvider>
+        <SettingsProvider>
+          <AlertProvider>
+            <ScrollToTop />
+            <AppRoutes />
+          </AlertProvider>
+        </SettingsProvider>
       </AuthProvider>
     </Router>
   );
