@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Helmet } from "react-helmet-async";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import routes from "./routes";
 import ScrollToTop from "./shared/util/ScrollToTop";
@@ -27,17 +28,24 @@ function App() {
 }
 
 function AppRoutes() {
-  const { isMaintenance } = useContext(SettingsContext);
+  const { isMaintenance, isRobotsBlocked } = useContext(SettingsContext);
   const { isOwner, isAdmin } = useContext(AuthContext);
 
-  return isMaintenance && !isOwner && !isAdmin ? (
-    <UnderMaintenance />
-  ) : (
-    <Routes>
-      {routes.map(({ path, element }, index) => (
-        <Route key={index} path={path} element={element} />
-      ))}
-    </Routes>
+  return (
+    <>
+      <Helmet>
+        {isRobotsBlocked && <meta name="robots" content="noindex, nofollow" />}
+      </Helmet>
+      {isMaintenance && !isOwner && !isAdmin ? (
+        <UnderMaintenance />
+      ) : (
+        <Routes>
+          {routes.map(({ path, element }, index) => (
+            <Route key={index} path={path} element={element} />
+          ))}
+        </Routes>
+      )}
+    </>
   );
 }
 
