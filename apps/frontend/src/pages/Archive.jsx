@@ -1,14 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Helmet } from "react-helmet-async";
 
 import MainLayout from "../Layouts/MainLayout";
 import NewsList from "../news/pages/NewsList";
+import { SettingsContext } from "../shared/context/SettingsContext";
 
 function Archive({ category, query }) {
+  const { siteTitle } = useContext(SettingsContext);
   const title =
     category === "search"
-      ? `Search result for "${query}" - Night Eye`
-      : `Archive - ${category} - Night Eye`;
+      ? `Search result for "${query}" - ${siteTitle.slice(0, 10)}`
+      : `Archive - ${category} - ${siteTitle.slice(0, 10)}`;
 
   const header =
     category === "search"

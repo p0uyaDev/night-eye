@@ -7,9 +7,11 @@ import Alert from "../../shared/components/UIElements/Alert";
 import { useAlert } from "../../shared/context/AlertContext";
 import Captcha from "../../shared/util/Captcha";
 import { AuthContext } from "../../shared/context/AuthContext";
+import { SettingsContext } from "../../shared/context/SettingsContext";
 
 function Auth() {
   const { showAlert, alert } = useAlert();
+  const { siteTitle } = useContext(SettingsContext);
   const { login } = useContext(AuthContext);
   const captchaRef = useRef();
   const [captchaValid, setCaptchaValid] = useState(false);
@@ -41,7 +43,7 @@ function Auth() {
   return (
     <>
       <Helmet>
-        <title>Auth - Night Eye</title>
+        <title>Auth - {siteTitle.slice(0, 10)}</title>
       </Helmet>
       <MainLayout>
         <div className="flex flex-col items-center justify-center min-h-screen">

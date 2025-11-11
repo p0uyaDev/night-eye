@@ -11,6 +11,7 @@ import PanelMembersTable from "../components/MembersTab/PanelMembersTable";
 import MembersForm from "../components/MembersTab/forms/MembersForm";
 import PanelSettingsProfile from "../components/SettingsTab/PanelSettingsProfile";
 import PanelWebsiteSettings from "../components/SettingsTab/PanelWebsiteSettings";
+import { SettingsContext } from "../../shared/context/SettingsContext";
 
 function Panel() {
   const { isAdmin, isOwner, isWriter } = useContext(AuthContext);
@@ -22,6 +23,8 @@ function Panel() {
 
   const [acitveMembersTab, setActiveMembersTab] = useState("table");
   const [acitveNewsTab, setActiveNewsTab] = useState("table");
+
+  const { siteTitle } = useContext(SettingsContext);
 
   useEffect(() => {
     function handleOpenUpdateTabNews(e) {
@@ -71,7 +74,7 @@ function Panel() {
   return (
     <>
       <Helmet>
-        <title>Panel - Night Eye</title>
+        <title>Panel - {siteTitle.slice(0, 10)}</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <PanelLayout>

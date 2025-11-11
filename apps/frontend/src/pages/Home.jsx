@@ -1,20 +1,23 @@
 //TODO: Need loading spinner and Skeleton
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import MainLayout from "../Layouts/MainLayout";
 import Hero from "../shared/components/UIElements/Hero/Hero";
 import ScrollTabs from "../shared/components/UIElements/Tab/ScrollTabs";
 import NewsList from "../news/pages/NewsList";
+import { SettingsContext } from "../shared/context/SettingsContext";
 import { news } from "../shared/dummy"; //TODO: dummy data
 import { Helmet } from "react-helmet-async";
 
 function Home() {
   const categories = ["nasa", "space", "tech"];
+  const { siteTitle } = useContext(SettingsContext);
   const heroNews = news.find((n) => n.hero === true);
 
   return (
     <>
       <Helmet>
-        <title>Night Eye - Sci-Fi News</title>
+        <title>{siteTitle}</title>
       </Helmet>
       <MainLayout>
         <main className="flex flex-col items-center justify-center px-5 mx-auto my-8 w-full max-w-6xl gap-16">

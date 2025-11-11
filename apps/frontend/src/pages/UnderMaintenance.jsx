@@ -4,7 +4,7 @@ export default function UnderMaintenance() {
   return (
     <>
       <Helmet>
-        <title>Under Maintenance - Night Eye</title>
+        <title>Under Maintenance - 503</title>
         <meta name="robots" content="noindex" />
         <meta
           name="description"
