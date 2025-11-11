@@ -20,7 +20,12 @@ export default function PanelWebsiteSettings() {
       /*onSubmit({})*/
     }
 
-    console.log(siteTitle, siteDescription);
+    const payload = {
+      siteTitle,
+      siteDescription,
+    };
+
+    console.log(payload); //TODO: remove console and connect to backend
   }
 
   return (
@@ -65,12 +70,14 @@ export default function PanelWebsiteSettings() {
             type="text"
             placeholder={siteTitle.slice(0, 30) + "..."}
             className="input"
+            onChange={(e) => setSiteTitle(e.target.value)}
           />
 
           <span className="label-text">Description</span>
           <textarea
             className="textarea h-24"
             placeholder={siteDescription.slice(0, 30) + "..."}
+            onChange={(e) => setSiteDescription(e.target.value)}
           ></textarea>
 
           <button type="submit" className="btn btn-primary">

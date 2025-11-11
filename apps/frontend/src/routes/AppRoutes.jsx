@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import routes from ".";
 import { AuthContext } from "../shared/context/AuthContext";
 import { SettingsContext } from "../shared/context/SettingsContext";
+import UnderMaintenance from "../pages/UnderMaintenance";
 
 export default function AppRoutes() {
   const { isMaintenance, isRobotsBlocked } = useContext(SettingsContext);

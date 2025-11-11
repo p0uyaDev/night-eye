@@ -11,22 +11,30 @@ import { SettingsContext } from "./shared/context/SettingsContext";
 import "./App.css";
 
 function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <SettingsProvider>
+          <AppShell />
+        </SettingsProvider>
+      </AuthProvider>
+    </Router>
+  );
+}
+
+function AppShell() {
   const { siteDescription } = useContext(SettingsContext);
+
   return (
     <>
       <Helmet>
         <meta property="og:description" content={siteDescription} />
       </Helmet>
-      <Router>
-        <AuthProvider>
-          <SettingsProvider>
-            <AlertProvider>
-              <ScrollToTop />
-              <AppRoutes />
-            </AlertProvider>
-          </SettingsProvider>
-        </AuthProvider>
-      </Router>
+
+      <AlertProvider>
+        <ScrollToTop />
+        <AppRoutes />
+      </AlertProvider>
     </>
   );
 }

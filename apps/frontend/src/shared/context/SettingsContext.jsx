@@ -9,4 +9,5 @@ export const SettingsContext = createContext({
   setSiteTitle: () => {},
   siteDescription:
     "Explore the unknown with Night Eye — your portal to futuristic news.",
+  setSiteDescription: () => {},
 });

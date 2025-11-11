@@ -6,12 +6,12 @@ export default function PanelSettingsProfile({ onSubmit }) {
   const { user } = useContext(AuthContext);
   const [name, setName] = useState(user.name || "");
   const [email, setEmail] = useState(user.email || "");
-  const [password, setPassword] = useState(user.password || "");
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [avatar, setAvatar] = useState(user.avatar || "");
   const [isChanged, setIsChanged] = useState(false);
 
-  const passwordChanged = password !== user.password;
+  const passwordChanged = password.trim().trim() !== "";
 
   //TODO: need secure hashed password from backend
 
@@ -19,10 +19,10 @@ export default function PanelSettingsProfile({ onSubmit }) {
     const hasChange =
       name !== user.name ||
       email !== user.email ||
-      password !== user.password ||
+      passwordChanged ||
       avatar !== user.avatar;
     setIsChanged(hasChange);
-  }, [name, email, password, avatar, user]);
+  }, [name, email, passwordChanged, avatar, user]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -58,7 +58,6 @@ export default function PanelSettingsProfile({ onSubmit }) {
       payload.avatar = avatar;
     }
 
-    console.log(payload); //TODO: remove this console.log when conntected to backend
     onSubmit?.(payload);
     setIsChanged(false);
   }
