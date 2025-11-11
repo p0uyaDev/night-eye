@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { PhoneCall, Mail } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import MainLayout from "../Layouts/MainLayout";
@@ -7,10 +7,12 @@ import { useAlert } from "../shared/context/AlertContext";
 import { sendEmailApi } from "../../service/email";
 import LoadingSpinner from "../shared/util/LoadingSpinner";
 import Captcha from "../shared/util/Captcha";
+import { SettingsContext } from "../shared/context/SettingsContext";
 
 function Contact() {
   const { showAlert, alert } = useAlert();
   const [loading, setLoading] = useState(false);
+  const { siteTitle } = useContext(SettingsContext);
   const [captchaValid, setCaptchaValid] = useState(false);
   const captchaRef = useRef();
 
@@ -52,7 +54,7 @@ function Contact() {
   return (
     <>
       <Helmet>
-        <title>Contact Us - Night Eye</title>
+        <title>Contact Us - {siteTitle.slice(0, 10)}</title>
       </Helmet>
       <MainLayout>
         <div className="hero min-h-screen">

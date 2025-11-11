@@ -9,6 +9,9 @@ import PanelNewsCreate from "../components/NewsTab/PanelNewsCreate";
 import NewsForm from "../components/NewsTab/forms/NewsForm";
 import PanelMembersTable from "../components/MembersTab/PanelMembersTable";
 import MembersForm from "../components/MembersTab/forms/MembersForm";
+import PanelSettingsProfile from "../components/SettingsTab/PanelSettingsProfile";
+import PanelWebsiteSettings from "../components/SettingsTab/PanelWebsiteSettings";
+import { SettingsContext } from "../../shared/context/SettingsContext";
 
 function Panel() {
   const { isAdmin, isOwner, isWriter } = useContext(AuthContext);
@@ -20,6 +23,8 @@ function Panel() {
 
   const [acitveMembersTab, setActiveMembersTab] = useState("table");
   const [acitveNewsTab, setActiveNewsTab] = useState("table");
+
+  const { siteTitle } = useContext(SettingsContext);
 
   useEffect(() => {
     function handleOpenUpdateTabNews(e) {
@@ -69,7 +74,7 @@ function Panel() {
   return (
     <>
       <Helmet>
-        <title>Panel - Night Eye</title>
+        <title>Panel - {siteTitle.slice(0, 10)}</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <PanelLayout>
@@ -117,6 +122,7 @@ function Panel() {
                       checked={acitveMembersTab === "create"}
                       onChange={() => setActiveMembersTab("create")}
                     />
+
                     <article className="tab-content border-base-300 bg-base-100 p-10">
                       <MembersForm />
                     </article>
@@ -131,6 +137,19 @@ function Panel() {
                         aria-label="📝 Update Member"
                       />
                       <article className="tab-content border-base-300 bg-base-100 p-10">
+                        <div className="flex justify-end mb-4">
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-outline btn-error"
+                            onClick={() => {
+                              setShowUpdateTabMembers(false);
+                              setMembersToFullEdit(null);
+                              setActiveMembersTab("table");
+                            }}
+                          >
+                            ✕
+                          </button>
+                        </div>
                         <MembersForm
                           key={
                             membersToFullEdit?._id ||
@@ -195,6 +214,20 @@ function Panel() {
                     aria-label="🔁 Update News"
                   />
                   <article className="tab-content border-base-300 bg-base-100 p-10">
+                    <div className="flex justify-end mb-4">
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-outline btn-error"
+                        onClick={() => {
+                          setShowUpdateTabNews(false);
+                          setNewsToUpdate(null);
+                          setActiveNewsTab("table");
+                        }}
+                      >
+                        ✕
+                      </button>
+                    </div>
+
                     <NewsForm
                       key={newsToUpdate?._id || newsToUpdate?.id || "new"}
                       mode="update"
@@ -217,8 +250,32 @@ function Panel() {
               aria-label="⚙️ Settings"
             />
             <section className="tab-content bg-base-100 border-base-300 p-6">
-              User Settings
-              {/* TODO: WIP tab feature! */}
+              <div className="tabs tabs-border">
+                <input
+                  type="radio"
+                  name="settings_tab"
+                  className="tab"
+                  aria-label="🪪 Profile Settings"
+                  defaultChecked
+                />
+                <article className="tab-content border-base-300 bg-base-100 p-10">
+                  <PanelSettingsProfile />
+                </article>
+
+                {(isAdmin || isOwner) && (
+                  <>
+                    <input
+                      type="radio"
+                      name="settings_tab"
+                      className="tab"
+                      aria-label="🌐 Website Settings"
+                    />
+                    <article className="tab-content border-base-300 bg-base-100 p-10">
+                      <PanelWebsiteSettings />
+                    </article>
+                  </>
+                )}
+              </div>
             </section>
           </div>
         </PanelGuard>

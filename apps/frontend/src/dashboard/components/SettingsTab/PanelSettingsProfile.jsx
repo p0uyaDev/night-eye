@@ -1,18 +1,28 @@
-//TODO: MembersForm need backend and database to submit data
-import { useState } from "react";
-export default function MembersForm({
-  mode = "create",
-  initData = {},
-  onUpdate,
-}) {
-  const [name, setName] = useState(initData.name || "");
-  const [role, setRole] = useState(initData.role || "");
-  const [email, setEmail] = useState(initData.email || "");
-  const [password, setPassword] = useState(initData.password || "");
+//TODO: panel profile settings need backend
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../../shared/context/AuthContext";
+
+export default function PanelSettingsProfile({ onSubmit }) {
+  const { user } = useContext(AuthContext);
+  const [name, setName] = useState(user.name || "");
+  const [email, setEmail] = useState(user.email || "");
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [avatar, setAvatar] = useState(initData.avatar || "");
+  const [avatar, setAvatar] = useState(user.avatar || "");
+  const [isChanged, setIsChanged] = useState(false);
+
+  const passwordChanged = password.trim().trim() !== "";
 
   //TODO: need secure hashed password from backend
+
+  useEffect(() => {
+    const hasChange =
+      name !== user.name ||
+      email !== user.email ||
+      passwordChanged ||
+      avatar !== user.avatar;
+    setIsChanged(hasChange);
+  }, [name, email, passwordChanged, avatar, user]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -21,19 +31,22 @@ export default function MembersForm({
       /*onSubmit({})*/
     }
 
-    if (!name || !role || !email || !role || (!password && mode === "create")) {
+    if (!isChanged) {
+      return;
+    }
+
+    if (!name || !email || !password) {
       alert("Please fill in all fields");
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (passwordChanged && password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
     const payload = {
       name,
-      role,
       email,
       password,
       avatar, //TODO: add default avatar to send database
@@ -45,14 +58,8 @@ export default function MembersForm({
       payload.avatar = avatar;
     }
 
-    console.log(payload); //TODO: remove this console.log when conntected to backend
-
-    if (mode === "update" && onUpdate) {
-      onUpdate?.(payload);
-      return;
-    }
-
     onSubmit?.(payload);
+    setIsChanged(false);
   }
 
   return (
@@ -84,48 +91,36 @@ export default function MembersForm({
             type="password"
             className="input validator"
             value={password}
-            onChange={(e) => setPassword(e.target.value)} //Not Safe
-            required={mode === "create"}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
           <p className="validator-hint">Required</p>
 
-          <label className="label">Confirm Password</label>
-          <input
-            type="password"
-            className={`input validator ${
-              confirmPassword && confirmPassword !== password
-                ? "border-error"
-                : ""
-            }`}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required={mode === "create"}
-          />
-          <p
-            className={`validator-hint ${confirmPassword && confirmPassword !== password ? "text-error" : ""}`}
-          >
-            {confirmPassword && confirmPassword !== password
-              ? "Password does not match"
-              : "Required"}
-          </p>
+          {passwordChanged && (
+            <>
+              <label className="label">Confirm Password</label>
+              <input
+                type="password"
+                className={`input validator ${
+                  confirmPassword && confirmPassword !== password
+                    ? "border-error"
+                    : ""
+                }`}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <p
+                className={`validator-hint ${confirmPassword && confirmPassword !== password ? "text-error" : ""}`}
+              >
+                {confirmPassword && confirmPassword !== password
+                  ? "Password does not match"
+                  : "Required"}
+              </p>
+            </>
+          )}
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="label">Role</label>
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className="select w-full required validator max-w-50"
-            required
-          >
-            <option value="" disabled={true}>
-              --- Select ---
-            </option>
-            <option value="writer">Writer</option>
-            <option value="admin">Admin</option>
-          </select>
-          <p className="validator-hint">Required</p>
-
           <label className="label">Avatar</label>
           <input
             type="file"
@@ -152,11 +147,13 @@ export default function MembersForm({
         </div>
       </fieldset>
 
-      <div className="flex flex-col mt-4 justify-center items-center">
-        <button type="submit" className="btn btn-primary">
-          {mode === "create" ? "Register Member" : "Update Member"}
-        </button>
-      </div>
+      {isChanged && (
+        <div className="flex flex-col mt-4 justify-center items-center">
+          <button type="submit" className="btn btn-primary">
+            Update
+          </button>
+        </div>
+      )}
     </form>
   );
 }
