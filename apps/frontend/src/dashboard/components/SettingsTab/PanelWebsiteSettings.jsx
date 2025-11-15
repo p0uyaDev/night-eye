@@ -23,6 +23,8 @@ export default function PanelWebsiteSettings() {
     const payload = {
       siteTitle,
       siteDescription,
+      isMaintenance,
+      isRobotsBlocked,
     };
 
     console.log(payload); //TODO: remove console and connect to backend
@@ -68,6 +70,7 @@ export default function PanelWebsiteSettings() {
           <span className="label-text">Title</span>
           <input
             type="text"
+            value={siteTitle}
             placeholder={siteTitle.slice(0, 30) + "..."}
             className="input"
             onChange={(e) => setSiteTitle(e.target.value)}
@@ -76,6 +79,7 @@ export default function PanelWebsiteSettings() {
           <span className="label-text">Description</span>
           <textarea
             className="textarea h-24"
+            value={siteDescription}
             placeholder={siteDescription.slice(0, 30) + "..."}
             onChange={(e) => setSiteDescription(e.target.value)}
           ></textarea>

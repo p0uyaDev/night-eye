@@ -11,7 +11,7 @@ export default function PanelSettingsProfile({ onSubmit }) {
   const [avatar, setAvatar] = useState(user.avatar || "");
   const [isChanged, setIsChanged] = useState(false);
 
-  const passwordChanged = password.trim().trim() !== "";
+  const passwordChanged = password.trim() !== "";
 
   //TODO: need secure hashed password from backend
 
@@ -35,7 +35,7 @@ export default function PanelSettingsProfile({ onSubmit }) {
       return;
     }
 
-    if (!name || !email || !password) {
+    if (!name || !email) {
       alert("Please fill in all fields");
       return;
     }
