@@ -34,17 +34,19 @@ export default function PanelMembersTable() {
   return (
     <table className="table w-3/5">
       <MembersTableHeader />
-      {filteredMembers.map((u) => {
-        return (
-          <MembersTableBody
-            key={u.id}
-            membersItem={u}
-            onKick={() => handleKick(u)}
-            onEdit={() => handleEdit(u)}
-            onFullEdit={() => handleFullEdit(u)}
-          />
-        );
-      })}
+      <tbody>
+        {filteredMembers.map((u) => {
+          return (
+            <MembersTableBody
+              key={u.id}
+              membersItem={u}
+              onKick={() => handleKick(u)}
+              onEdit={() => handleEdit(u)}
+              onFullEdit={() => handleFullEdit(u)}
+            />
+          );
+        })}
+      </tbody>
     </table>
   );
 }

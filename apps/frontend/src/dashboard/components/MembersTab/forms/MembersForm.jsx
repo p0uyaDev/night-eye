@@ -4,6 +4,7 @@ export default function MembersForm({
   mode = "create",
   initData = {},
   onUpdate,
+  onSubmit,
 }) {
   const [name, setName] = useState(initData.name || "");
   const [role, setRole] = useState(initData.role || "");

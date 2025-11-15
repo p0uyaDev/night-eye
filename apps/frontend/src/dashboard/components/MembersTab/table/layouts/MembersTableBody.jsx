@@ -44,84 +44,79 @@ export default function MembersTableBody({
   }, [isEditing, editedDate]);
 
   return (
-    <tbody>
-      <tr ref={rowRef}>
-        <td>{membersItem.id}</td>
+    <tr ref={rowRef}>
+      <td>{membersItem.id}</td>
 
-        <td>
-          <div className="flex items-center gap-3">
-            <div className="avatar">
-              <div className="mask mask-squircle h-12 w-12">
-                <img
-                  src={editedDate.avatar}
-                  alt={`${editedDate.name} avatar`}
-                />
-              </div>
-            </div>
-
-            <div>
-              {isEditing ? (
-                <>
-                  <input
-                    name="name"
-                    className="input border-none"
-                    value={editedDate.name}
-                    onChange={handleChange}
-                  />
-                  <select
-                    name="role"
-                    className="select select-sm border-none decoration-none"
-                    value={editedDate.role}
-                    onChange={handleChange}
-                  >
-                    <option value="admin">Admin</option>
-                    <option value="writer">Writer</option>
-                  </select>
-                </>
-              ) : (
-                <>
-                  <div className="font-bold" onClick={() => setIsEditing(true)}>
-                    {editedDate.name}
-                  </div>
-                  <div
-                    className="text-sm opacity-50"
-                    onClick={() => setIsEditing(true)}
-                  >
-                    {editedDate.role}
-                  </div>
-                </>
-              )}
+      <td>
+        <div className="flex items-center gap-3">
+          <div className="avatar">
+            <div className="mask mask-squircle h-12 w-12">
+              <img src={editedDate.avatar} alt={`${editedDate.name} avatar`} />
             </div>
           </div>
-        </td>
 
-        <td>
-          {isEditing ? (
-            <input
-              name="email"
-              className="input input-sm w-full"
-              value={editedDate.email}
-              onChange={handleChange}
-            />
-          ) : (
-            <div
-              className="text-sm opacity-50"
-              onClick={() => setIsEditing(true)}
-            >
-              {editedDate.email}
-            </div>
-          )}
-        </td>
+          <div>
+            {isEditing ? (
+              <>
+                <input
+                  name="name"
+                  className="input border-none"
+                  value={editedDate.name}
+                  onChange={handleChange}
+                />
+                <select
+                  name="role"
+                  className="select select-sm border-none decoration-none"
+                  value={editedDate.role}
+                  onChange={handleChange}
+                >
+                  <option value="admin">Admin</option>
+                  <option value="writer">Writer</option>
+                </select>
+              </>
+            ) : (
+              <>
+                <div className="font-bold" onClick={() => setIsEditing(true)}>
+                  {editedDate.name}
+                </div>
+                <div
+                  className="text-sm opacity-50"
+                  onClick={() => setIsEditing(true)}
+                >
+                  {editedDate.role}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </td>
 
-        <td>
-          <MembersTableActions
-            membersItem={membersItem}
-            onKick={onKick}
-            onFullEdit={onFullEdit}
-            actions={["kick", "edit"]}
+      <td>
+        {isEditing ? (
+          <input
+            name="email"
+            className="input input-sm w-full"
+            value={editedDate.email}
+            onChange={handleChange}
           />
-        </td>
-      </tr>
-    </tbody>
+        ) : (
+          <div
+            className="text-sm opacity-50"
+            onClick={() => setIsEditing(true)}
+          >
+            {editedDate.email}
+          </div>
+        )}
+      </td>
+
+      <td>
+        <MembersTableActions
+          membersItem={membersItem}
+          onKick={onKick}
+          onFullEdit={onFullEdit}
+          actions={["kick", "edit"]}
+        />
+      </td>
+    </tr>
   );
 }

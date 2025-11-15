@@ -18,7 +18,7 @@ export default function NewsForm({
   const [badge, setBadge] = useState(initData.badge || "");
   const [authorId, setAuthorId] = useState(initData.writerId || user.id); //TODO: need Auth and backend
   const [category, setCategory] = useState(initData.category || "");
-  const [content, setContent] = useState();
+  const [content, setContent] = useState(initData.content ?? "");
 
   const selectedAuthor = useMemo(
     () => users.find((u) => u.id == authorId),
@@ -55,11 +55,16 @@ export default function NewsForm({
       payload.mainImage = mainImage;
     }
 
-    console.log(payload); //TODO: need backend and remove console.log
-
     if (mode === "update" && onUpdate) {
       onUpdate();
     }
+
+    if (mode === "create" && onSubmit) {
+      onSubmit(payload);
+      return;
+    }
+
+    console.log(payload); //TODO: need backend and remove console.log
   }
 
   return (

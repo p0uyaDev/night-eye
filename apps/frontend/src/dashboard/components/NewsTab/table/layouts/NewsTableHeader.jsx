@@ -9,7 +9,11 @@ export default function NewsTableHeader({
   setReadCountSort,
 }) {
   function toggleDateSort() {
-    setDateSort((prev) => (prev === "asc" ? "desc" : "asc"));
+    setDateSort((prev) => {
+      if (prev === "asc") return "desc";
+      if (prev === "desc") return "asc";
+      return "desc";
+    });
     setReadCountSort(null);
   }
 

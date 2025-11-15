@@ -86,7 +86,7 @@ export default function PanelNewsTable() {
   return (
     <div className="overflow-x-auto">
       <NewsTableControl
-        onSeach={setSearchQuery}
+        onSearch={setSearchQuery}
         filter={filters}
         setFilters={setFilters}
       />
