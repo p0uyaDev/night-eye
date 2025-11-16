@@ -30,14 +30,14 @@ import {
   Baseline as BaselineIcon,
 } from "lucide-react";
 
-function openFileDialog(accept = "*/*") {
-  return new Promise((resolve) => {
-    const input = document.createElement("input");
-    ((input.type = "file"), (input.accept = accept));
-    input.onChange = () => resolve(input.files[0]);
-    input.click();
-  });
-}
+//function openFileDialog(accept = "*/*") {
+//  return new Promise((resolve) => {
+//    const input = document.createElement("input");
+//    ((input.type = "file"), (input.accept = accept));
+//    input.onChange = () => resolve(input.files[0]);
+//    input.click();
+//  });
+//}
 
 function ToolBar({ editor, editorState }) {
   function addImage(method) {

@@ -3,6 +3,7 @@ import { useState, useCallback } from "react";
 import { AuthContext } from "./AuthContext";
 import { users } from "../dummy"; //TODO: Replace with backend api
 
+//TODO: JSON saving is not secure
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
