@@ -2,9 +2,9 @@ function Tags({ tags }) {
   return (
     <>
       {tags.map((tag) => (
-        <div key={tag} className="badge badge-primary">
+        <span key={tag} className={`badge badge-primary mr-1 mb-1`}>
           {tag}
-        </div>
+        </span>
       ))}
     </>
   );

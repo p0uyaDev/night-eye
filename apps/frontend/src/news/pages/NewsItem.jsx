@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import MainLayout from "../../Layouts/MainLayout";
@@ -9,10 +9,12 @@ import MetaInfo from "../components/MetaInfo";
 import Tag from "../../shared/components/UIElements/Tag";
 import RelatedNews from "../components/RelatedNews";
 import { news, users } from "../../shared/dummy"; //TODO: Replace with backend call later
+import { SettingsContext } from "../../shared/context/SettingsContext";
 
 function NewsItem() {
   const { slug } = useParams();
   const item = news.find((n) => n.slug === slug);
+  const { siteTitle } = useContext(SettingsContext);
 
   if (!item) {
     return <NotFound />;
@@ -34,7 +36,9 @@ function NewsItem() {
   return (
     <MainLayout>
       <Helmet>
-        <title>{item.title} - Night Eye</title>
+        <title>
+          {item.title} - {siteTitle.slice(0, 10)}
+        </title>
       </Helmet>
       <div className="mx-2 py-2">
         <Breadcrumb links={links} />

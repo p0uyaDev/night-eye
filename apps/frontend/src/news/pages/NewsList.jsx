@@ -12,8 +12,9 @@ function NewsList({
   newsType,
   ...props
 }) {
+  const published = news.filter((item) => item.status === "published");
   const [paginatedNews, setPaginatedNews] = useState([]);
-  const filteredNews = useNewsFilter(news, category, query);
+  const filteredNews = useNewsFilter(published, category, query);
 
   function finalNewsList() {
     if (newsType === "badged") {

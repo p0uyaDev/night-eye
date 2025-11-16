@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import MainLayout from "../Layouts/MainLayout";
 import Hero from "../shared/components/UIElements/Hero/Hero";
+import { SettingsContext } from "../shared/context/SettingsContext";
 
 function About() {
+  const { siteTitle } = useContext(SettingsContext);
   return (
     <>
       <Helmet>
-        <title>About Us - Night Eye</title>
+        <title>About Us - {siteTitle.slice(0, 10)}</title>
       </Helmet>
       <MainLayout>
         <Hero

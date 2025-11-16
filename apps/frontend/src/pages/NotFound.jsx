@@ -6,7 +6,7 @@ function NotFound() {
   return (
     <>
       <Helmet>
-        <title>404 Not Found - Night Eye</title>
+        <title>404 Not Found</title>
         <meta name="robots" content="noindex" />
         <meta
           name="description"
