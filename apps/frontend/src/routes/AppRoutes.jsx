@@ -25,8 +25,8 @@ export default function AppRoutes() {
         <UnderMaintenance />
       ) : (
         <Routes>
-          {routes.map(({ path, element }, index) => (
-            <Route key={index} path={path} element={element} />
+          {routes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
           ))}
         </Routes>
       )}

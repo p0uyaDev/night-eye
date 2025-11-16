@@ -10,7 +10,6 @@ import Panel from "../dashboard/pages/Panel";
 import PanelRedirect from "../shared/util/temp/PanelRedirect"; //TODO: temp element not secure !!!
 import PrivateRoute from "../shared/util/temp/PrivateRoute"; //TODO: temp element not secure !!!
 import NotFound from "../pages/NotFound";
-import TestPage from "../pages/TestPage";
 
 const routes = [
   {
@@ -75,11 +74,6 @@ const routes = [
   {
     path: "*",
     element: <NotFound />,
-  },
-  {
-    //TODO: temp page for just testing
-    path: "/test",
-    element: <TestPage />,
   },
 ];
 
