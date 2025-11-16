@@ -70,6 +70,7 @@ function Auth() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
 
               <div className="mt-4">
