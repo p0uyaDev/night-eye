@@ -14,12 +14,12 @@ export default function Actions({ item, actions = [], mode = "row" }) {
             to={action.to}
             className={`btn btn-ghost btn-xs ${action.color ?? ""}`}
           >
-            {action.label && <action.icon />} {action.label}
+            {action.icon && <action.icon />} {action.label}
           </Link>
         ) : (
           <button
             key={action.label}
-            className={`btn btn-ghost btn-xs ${action.color} ?? ""`}
+            className={`btn btn-ghost btn-xs ${action.color ?? ""}`}
             onClick={() => action.onClick?.(item)}
           >
             {action.icon && <action.icon />} {action.label}

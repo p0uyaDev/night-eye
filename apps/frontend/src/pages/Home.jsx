@@ -21,7 +21,7 @@ function Home() {
       </Helmet>
       <MainLayout>
         <main className="flex flex-col items-center justify-center px-5 mx-auto my-8 w-full max-w-6xl gap-16">
-          <section arial-label="Hero featured news">
+          <section aria-label="Hero featured news">
             <Hero
               {...heroNews}
               description={heroNews.description.slice(0, 100) + "..."}
@@ -31,7 +31,7 @@ function Home() {
             />
           </section>
 
-          <section arial-label="News categories navigation">
+          <section aria-label="News categories navigation">
             <ScrollTabs categories={categories} />
           </section>
 
@@ -66,7 +66,7 @@ function Home() {
                 </header>
                 <div className="divider divider-primary"></div>
                 {badgeNews.length > 0 && (
-                  <article arial-label={`${categories} badge news`}>
+                  <article aria-label={`${categories} badge news`}>
                     <NewsList
                       category={categories}
                       size="large"
@@ -77,7 +77,7 @@ function Home() {
 
                 {normalNews.length > 0 && (
                   <aside
-                    arial-label={`${categories} normal news`}
+                    aria-label={`${categories} normal news`}
                     className="mt-8"
                   >
                     <NewsList
