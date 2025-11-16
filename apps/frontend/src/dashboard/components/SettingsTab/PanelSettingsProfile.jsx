@@ -4,14 +4,18 @@ import { AuthContext } from "../../../shared/context/AuthContext";
 
 export default function PanelSettingsProfile({ onSubmit }) {
   const { user } = useContext(AuthContext);
-  const [name, setName] = useState(user.name || "");
-  const [email, setEmail] = useState(user.email || "");
+  const [name, setName] = useState(user?.name || "");
+  const [email, setEmail] = useState(user?.email || "");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [avatar, setAvatar] = useState(user.avatar || "");
   const [isChanged, setIsChanged] = useState(false);
 
   const passwordChanged = password.trim() !== "";
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   //TODO: need secure hashed password from backend
 
