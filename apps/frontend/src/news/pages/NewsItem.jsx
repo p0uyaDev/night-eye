@@ -64,6 +64,9 @@ function NewsItem() {
             <Tag tags={item.tags} />
           </div>
         </article>
+        <article className="max-w-2xl mt-8">
+          <p className="mb-4 text-lg">{item.content}</p>
+        </article>
 
         <AuthorCard {...author} />
 
