@@ -46,6 +46,7 @@ export default function PanelSettingsProfile({ onSubmit }) {
 
     if (passwordChanged && password !== confirmPassword) {
       alert("Passwords do not match");
+      payload.password = password;
       return;
     }
 
@@ -65,6 +66,14 @@ export default function PanelSettingsProfile({ onSubmit }) {
     onSubmit?.(payload);
     setIsChanged(false);
   }
+
+  useEffect(() => {
+    return () => {
+      if (avatar instanceof File) {
+        URL.revokeObjectURL(URL.createObjectURL(avatar));
+      }
+    };
+  }, [avatar]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -96,9 +105,10 @@ export default function PanelSettingsProfile({ onSubmit }) {
             className="input validator"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
-          <p className="validator-hint">Required</p>
+          <p className="validator-hint">
+            Optional - leave blank to keep the same
+          </p>
 
           {passwordChanged && (
             <>
@@ -143,7 +153,11 @@ export default function PanelSettingsProfile({ onSubmit }) {
                 }
                 alt="Preview Member Avatar"
               />
-              <button type="button" onClick={() => setAvatar(null)}>
+              <button
+                type="button"
+                className="cursor-pointer"
+                onClick={() => setAvatar(null)}
+              >
                 ✕
               </button>
             </div>
