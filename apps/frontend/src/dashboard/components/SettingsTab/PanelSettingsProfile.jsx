@@ -8,14 +8,10 @@ export default function PanelSettingsProfile({ onSubmit }) {
   const [email, setEmail] = useState(user?.email || "");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [avatar, setAvatar] = useState(user.avatar || "");
+  const [avatar, setAvatar] = useState(user?.avatar || "");
   const [isChanged, setIsChanged] = useState(false);
 
   const passwordChanged = password.trim() !== "";
-
-  if (!user) {
-    return <div>Loading...</div>;
-  }
 
   //TODO: need secure hashed password from backend
 
@@ -46,7 +42,6 @@ export default function PanelSettingsProfile({ onSubmit }) {
 
     if (passwordChanged && password !== confirmPassword) {
       alert("Passwords do not match");
-      payload.password = password;
       return;
     }
 
@@ -74,6 +69,10 @@ export default function PanelSettingsProfile({ onSubmit }) {
       }
     };
   }, [avatar]);
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <form onSubmit={handleSubmit}>

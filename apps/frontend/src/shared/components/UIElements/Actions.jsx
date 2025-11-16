@@ -10,7 +10,7 @@ export default function Actions({ item, actions = [], mode = "row" }) {
       {actions.map((action) =>
         action.type === "link" ? (
           <Link
-            key={action.label}
+            key={action.id ?? action.label}
             to={action.to}
             className={`btn btn-ghost btn-xs ${action.color ?? ""}`}
           >
