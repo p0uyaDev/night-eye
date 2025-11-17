@@ -1,64 +1,90 @@
-# 🦉 Night Eye
+# 🦉 Night Eye — Fullstack Template
 
-![Night Eye Logo](./assets/ChatGPT%20Image%20Jul%2021,%202025,%2012_35_55%20AM.png)
+**Night Eye** is a personal fullstack starter template forged for rapid development, dark-themed UIs, and clean project structure.
+This monorepo is powered by **Bun workspaces**, allowing both frontend and backend apps to live under a single, organized structure.
 
-**Night Eye** is a fullstack monorepo built with modern tooling to deliver a fast, scalable, and dark-themed user experience. This project uses `pnpm` workspaces to manage both frontend and backend apps in a clean and modular structure.
+> ⚠️ **Important:**
+> This is not a production-ready system.
+> Night Eye is a **personal evolving template**, unstable and frequently refactored as new ideas are added.
 
 ---
 
 ## 🗂 Project Structure
 
 ```
-
 night-eye/
 ├── apps/
-│   ├── backend/        # Express.js API
-│   └── frontend/       # Vite + React.js client
+│   ├── frontend/       # React + Vite + Tailwind + DaisyUI
+│   └── backend/        # (Planned) Ktor + Kotlin API
 ├── assets/             # Shared static assets (e.g., logo)
-├── package.json        # Root monorepo package
-
-````
+├── bunfig.toml         # Bun workspace config
+└── package.json        # Root monorepo metadata
+```
 
 ---
 
 ## 🛠 Tech Stack
 
-| Layer     | Tech                             |
-|-----------|----------------------------------|
-| Frontend  | React 19, Vite, ESLint           |
-| Backend   | Express.js                       |
-| Tooling   | pnpm workspaces, ESM modules     |
+| Layer    | Technology                                               |
+| -------- | -------------------------------------------------------- |
+| Frontend | React 19, Vite, TailwindCSS, DaisyUI, ESLint             |
+| Backend  | (WIP) Ktor + Kotlin                                      |
+| Tooling  | Bun Workspaces, ESM modules, GitHub Actions (future) |
 
 ---
 
-## 📦 Monorepo Setup
+## ⚠️ Status: Unstable & Under Heavy Development
 
-This repo uses [`pnpm` workspaces](https://pnpm.io/workspaces) to manage multiple apps.
+Night Eye is a **living template**, meaning:
 
-### 📁 Folder Initialization Flow
+* File structure **will change often**
+* Backend (Ktor) is **not implemented yet**
+* Components are experimental
+* Purpose: **speed up future projects** and reduce repeated setup work
+
+If you clone or fork it, expect breakage.
+
+---
+
+## 📦 Monorepo Setup (Using Bun)
+
+### 🔧 Install Dependencies
 
 ```bash
-# 1. Clone the repo
+# 1. Clone the repository
 git clone https://github.com/your-username/night-eye.git
 cd night-eye
 
-# 2. Install all dependencies in monorepo
-pnpm install
+# 2. Install all dependencies for all apps
+bun install
+```
 
-# 3. Start backend server
-cd apps/backend
-pnpm run dev  # You need to create this script
+### ▶️ Start Frontend Development Server
 
-# 4. Start frontend dev server
-cd ../frontend
-pnpm run dev
-````
+```bash
+cd apps/frontend
+bun run dev
+```
 
-> 🧩 Each app manages its own `package.json` and dependencies. Shared configuration or utilities can be added in a future `/packages` folder.
+Backend will be added soon.
+
+---
+
+## 🎨 Frontend Overview
+
+The frontend uses a clean and modular setup:
+
+* **React 19** (modern, minimal boilerplate)
+* **Vite** for fast HMR
+* **TailwindCSS + DaisyUI** for a pre-styled dark UI
+* Reusable components: pagination, inputs, loaders
+* Context-based isolated state stores
+* Dark-gothic visual tone to match Night Eye’s theme
+
+Designed for **focus coding**, clean structure, and flexibility.
 
 ---
 
 ## 🖤 License
 
-This project is licensed under the **ISC License**.
-
+Night Eye is licensed under the **ISC License** — minimal restrictions, perfect for personal starter templates.
